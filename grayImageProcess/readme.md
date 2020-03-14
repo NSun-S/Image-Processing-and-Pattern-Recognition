@@ -133,4 +133,4 @@ for(int i = 0; i< height;i++){
 ![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/stretch_Naruto.jpg)
 ## 实验感想
 我使用Java语言实现了打开一幅图像，进行直方图均衡．将灰度线性变化，将灰度拉伸。刚开始我对图像处理一无所知，在读取图像过程中遇到了较多的问题，但当图片读取完进行进行接下来的操作时，我对课堂上讲授的关于灰度图像处理的内容有了更加深刻的理解。实验的效果也非常的符合预期，让我学习到了处理灰度图像的基本方法。
-完整代码及另一张图片的处理结果在GitHub查看，https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition。
+完整代码及另一张图片的处理结果在GitHub查看，https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/tree/master/grayImageProcess。
