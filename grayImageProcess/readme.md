@@ -60,7 +60,7 @@ for(int i = 0; i< height;i++){
 ![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/gray_Naruto.jpg)
 ![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/histogram_Naruto.jpg)
 ### 将灰度图像进行线性变换
-	线性变换，顾名思义是是将原来的灰度范围线性映射到一个新的灰度范围。
+线性变换，顾名思义是是将原来的灰度范围线性映射到一个新的灰度范围。
 
 
 仿照课件上的例子，我们将灰度范围从最开始的范围[0,226]分别变化到[0,127]和[0,63]，关键部分代码如下。
@@ -83,7 +83,7 @@ for(int i = 0; i < height; i++){
 
 
 ### 将灰度图像进行线性拉伸
-	线性拉伸个人理解是线性变化的更为一般的形式，即分段线性变换，我们根据直方图修正中统计出的各灰度值对应的频率选取出大部分像素所在的灰度区间，然后根据上下限选择一个更宽的区间，以90%作为大多数的标准，得到的上下限为28和186，我们将其拉伸到[10,210]。关键部分代码如下。
+线性拉伸个人理解是线性变化的更为一般的形式，即分段线性变换，我们根据直方图修正中统计出的各灰度值对应的频率选取出大部分像素所在的灰度区间，然后根据上下限选择一个更宽的区间，以90%作为大多数的标准，得到的上下限为28和186，我们将其拉伸到[10,210]。关键部分代码如下。
 ```
 int now_min=0,now_max=255,sum;
 double rate = 0.1;
