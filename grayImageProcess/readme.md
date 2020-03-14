@@ -23,6 +23,8 @@ for(int i = 0; i<width;i++){
 ```
 我们遍历图片的每一个像素点，计算出灰度值。原图和灰度图如下。
 
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/gray_Naruto.jpg)
 ### 将灰度图像进行直方图均衡
 我们的图像采用离散化的直方图修正方法，先统计每一个灰度级别对应的像素点的个数，计算每个灰度级别对应的频率，然后从第0级到第255级逐渐累加频率，并计算出对应灰度级新的灰度值。下图为课件中对应的计算方法。
 
@@ -55,7 +57,8 @@ for(int i = 0; i< height;i++){
 ```
 下图为灰度图（左）与直方图均衡处理后的图像（右）对比。可以看出，我们达到了增强图像，使图像包含信息最多的目的。
 
-
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/gray_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/histogram_Naruto.jpg)
 ### 将灰度图像进行线性变换
 	线性变换，顾名思义是是将原来的灰度范围线性映射到一个新的灰度范围。
 
@@ -73,6 +76,10 @@ for(int i = 0; i < height; i++){
 }
 ```
 统计图片灰度值的上下限部分代码略去，根据公式映射到新的灰度范围，然后替代原来的像素值。下面3张图是我们的效果图，左上是原灰度图，右上是映射到[0,127]区间的图像，下面是映射到[0,63]区间的图像。
+
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/gray_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/linearChange_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/linearChange64_Naruto.jpg)
 
 
 ### 将灰度图像进行线性拉伸
@@ -122,6 +129,8 @@ for(int i = 0; i< height;i++){
 ```
 下图为原灰度图（左）和拉伸后的图像（右）的对比图。
 
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/gray_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/stretch_Naruto.jpg)
 ## 实验感想
 我使用Java语言实现了打开一幅图像，进行直方图均衡．将灰度线性变化，将灰度拉伸。刚开始我对图像处理一无所知，在读取图像过程中遇到了较多的问题，但当图片读取完进行进行接下来的操作时，我对课堂上讲授的关于灰度图像处理的内容有了更加深刻的理解。实验的效果也非常的符合预期，让我学习到了处理灰度图像的基本方法。
 完整代码及另一张图片的处理结果在GitHub查看，https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition。
