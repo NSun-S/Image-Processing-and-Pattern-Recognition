@@ -1,13 +1,11 @@
-图像处理与模式识别第二次大作业报告
-——17231151 孙旭东
-一、实验内容
+### 实验内容
 用程序实现一个数字图像的傅里叶变换和余弦变换。
-二、实验设计
+### 实验设计
 在最开始的设计中，我仍沿用上次的方法使用Java语言，尝试根据课上的公式实现数字图像的离散傅里叶变换（DFT）及反变换（IDFT），以及离散余弦变换（DCT）。在推进的过程中，由于自己实现的IDFT有问题，又用python的opencv库进行了尝试。
 在图像的选取上，选择了经典的Lena图，还有一张类似的图片。
-三、实验流程
+### 实验流程
 1.编写图片IO相关接口
-	工欲善其事，必先利其器，在实验的第一步，我选择了完成图片相关的接口，包括读取图片接口，绘制图片接口和保存图片接口。图片的读取和保存使用了Image IO类，图片的绘制使用了JFrame类。
+工欲善其事，必先利其器，在实验的第一步，我选择了完成图片相关的接口，包括读取图片接口，绘制图片接口和保存图片接口。图片的读取和保存使用了Image IO类，图片的绘制使用了JFrame类。
 读取图片接口：
 ```java
 public static BufferedImage readImage(String file) throws Exception{
@@ -54,7 +52,7 @@ public static void drawImages(String title, int height, int width, BufferedImage
 ```
 2.定义复数类
 
-	在傅里叶变换中，用到了复数（公式中用红框框住的部分），根据欧拉公式有，因此在实际计算中，我们需要复数类，分别记录实部和虚部。这部分我定义了一个复数类，实现了复数的表示以及复数间的各种计算。下面展示复数类的构造方法以及部分计算方法。
+在傅里叶变换中，因此在实际计算中，我们需要复数类，分别记录实部和虚部。这部分我定义了一个复数类，实现了复数的表示以及复数间的各种计算。下面展示复数类的构造方法以及部分计算方法。
 构造方法：
 ```java
 // create a new object with the given real and imaginary parts
@@ -101,7 +99,7 @@ public double phase() { return Math.atan2(im, re); }
 ```
 复数的加法和乘法按照公式实现即可，在我们的傅里叶变换中会用到幅值计算和相位计算的函数，也进行了相应的实现。在我们后续的计算中，会用到复数的相关功能。
 3.DFT幅值谱计算
-	在这部分，我直接按照傅里叶正变换的公式进行计算，没有注意到傅里叶变换的可分离性，导致整个程序为n4的复杂度，在图片长宽都为256像素的情况下，计算量太大，然而在程序完成之前我仍未注意到傅里叶变换的可分离性，因此我采用的方法是多线程。
+在这部分，我直接按照傅里叶正变换的公式进行计算，没有注意到傅里叶变换的可分离性，导致整个程序为n4的复杂度，在图片长宽都为256像素的情况下，计算量太大，然而在程序完成之前我仍未注意到傅里叶变换的可分离性，因此我采用的方法是多线程。
 以256*256的图片为例说明，我在计算每一行的256个F(u,v)值时，将每一个值的计算
 作为一个子线程进行计算，这样可以以并行的方式缩短运算的时间，但由于实际的计算量并未减少，计算一次仍需要近10分钟，但勉强可以支撑任务。
 我定义了一个Pixel类用来记录一个像素在原图中的坐标，以及后续计算出来的对应的傅里叶变换值。
@@ -159,9 +157,9 @@ public BufferedImage generateFourierImage(BufferedImage image) throws Exception{
 这里可以清楚的看出，我们多线程相关的内容，每一行都新建一个线程池，然后将这一行每个位置傅里叶变换值的计算开创一个线程，大大节省了计算的时间。
 下面是我们对Lena图的处理，左边是lena图的原图，为256*256大小，右边是计算得到的傅里叶幅值频谱图，下面是对幅值频谱进行中心化之后的频谱图（中心化相关函数交简单，这里不予展示）。
 
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/gray_Naruto.jpg)
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/stretch_Naruto.jpg)
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/gray_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/lena/lena.png)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/lena/DFT_lena.png)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/lena/DFT_shift_lena.png)
 
 可以看到在中心化之后的图片，中间的为低频直流分量，四周的为高频分量。
 4.DFT相位谱计算
@@ -171,8 +169,8 @@ public BufferedImage generateFourierImage(BufferedImage image) throws Exception{
 double scaleVal = Math.abs((180*sum.phase()/Math.PI));
 再次运行程序就能够得到图像的相位谱。如下图所示（左图为中心化前的图像，右图为中心化后的图像）：
 
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/gray_Naruto.jpg)
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/stretch_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/lena/phase_lena.png)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/lena/phase2_lena.png)
 
 5.DCT相位谱计算
 这部分仍沿用上一部分的多线程结构，但是具体的计算模块需要进行替换，计算方式替换成DCT相应的计算公式（如下图所示）。
@@ -205,7 +203,7 @@ public newPixel call(){
 }
 ```
 运行程序得到下图的结果。
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/gray_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/lena/DCT_lena.png)
 
 可以看出能量集中在了左上角。
 6.IDFT
@@ -240,7 +238,7 @@ plt.imshow(cv2.magnitude(idft[:,:,0],idft[:,:,1]),cmap='gray')
 plt.show()
 ```
 程序运行结果如下：
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/gray_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/cv_DFT.png)
 
 四、实验感想
 经过了这次实验，我对傅里叶变换和离散余弦变换有了进一步的了解，初步掌握了对应的编程方法，还意外更深入学习了java多线程相关知识。不足之处在于没有自己手动实现傅里叶反变换这一过程，而是直接用了轮子，导致对这一部分的知识没有投入到具体应用。
@@ -249,7 +247,7 @@ plt.show()
 五、附录
 这里附上另一张图片的处理结果。
 
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/gray_Naruto.jpg)
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/stretch_Naruto.jpg)
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/gray_Naruto.jpg)
-![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/grayImageProcess/images/image1/stretch_Naruto.jpg)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/film/film.png)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/film/film.png)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/film/DFT_shift_film.png)
+![](https://github.com/NSun-S/Image-Processing-and-Pattern-Recognition/blob/master/imageTransformation/images/film/DCT_film.png)
