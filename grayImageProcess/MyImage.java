@@ -5,6 +5,7 @@ import javax.imageio.*;
 import javax.swing.*;
 
 public class MyImage extends JFrame {
+    // 使用需更改图片文件的路径及文件名
     static final String filepath = "D:\\study\\图像处理与模式识别\\image\\src\\";
     static final String filename = "Naruto.jpg";
 //   static final String format = ".jpg";
@@ -58,7 +59,6 @@ public class MyImage extends JFrame {
             for(int j = 0; j < height; j++){
                 int gray = pixels[i*height + j]&0xff;
                 histogram[gray]++;
-                //System.out.println(gray);
             }
         }
         double[] p = new double[256];
