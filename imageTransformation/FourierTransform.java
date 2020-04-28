@@ -1,5 +1,6 @@
 import Complex.Complex;
 
+import javax.imageio.spi.ServiceRegistry;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashSet;
@@ -8,11 +9,13 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Filter;
 
 /**
  * Created by tinkie101 on 2015/08/16.
  */
 public class FourierTransform {
+    Complex[][] a = new Complex[256][256];
 
     class newPixel
     {
@@ -56,14 +59,15 @@ public class FourierTransform {
                     sum = sum.plus(complex);
                 }
             }
-
-    //            double scaleVal = (1.0d / N) *sum.abs();
-            double scaleVal = Math.abs((180*sum.phase()/Math.PI));
+            a[u][v] = sum;
+//
+//            double scaleVal = Math.abs((180*sum.phase()/Math.PI));
+            double scaleVal = sum.abs()/N;
             if(scaleVal > 255)
                 scaleVal = 255;
             else if(scaleVal < 0)
                 scaleVal = 0;
-
+//            System.out.println(scaleVal);
             return new newPixel(u, v, scaleVal);
         }
     }
@@ -88,21 +92,19 @@ public class FourierTransform {
 
             for(int u = 0; u < image.getWidth(); u++){
                 for(int v = 0; v < image.getHeight(); v++){
-                    Color colour = new Color(image.getRGB(u, v));
-
-                    int averageGray = (colour.getRed() + colour.getGreen() + colour.getBlue())/3;
 
                     double phase = ((2.0d * Math.PI)/((double)N)) * (double)(u*x + v*y);
 
-                    Complex complex = new Complex(Math.cos(phase), Math.sin(phase));
-                    complex = complex.times((double) averageGray);
+                    Complex complex = new Complex(a[u][v].re() * Math.cos(phase) - a[u][v].im() * Math.sin(phase)
+                            , a[u][v].re() * Math.sin(phase) + a[u][v].im() * Math.cos(phase));
+
                     sum = sum.plus(complex);
                 }
             }
 
-//            sum = sum.times(1.0d/N/N);
-            double scaleVal = sum.abs()*(1.0d/N);
-
+            sum = sum.times(1.0d/N/N);
+            double scaleVal = sum.abs();
+//            System.out.println(scaleVal);
             if(scaleVal > 255)
                 scaleVal = 255;
             else if(scaleVal < 0)
